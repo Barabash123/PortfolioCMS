@@ -4,8 +4,22 @@ export const Media: CollectionConfig = {
   slug: 'media',
   upload: {
     staticDir: 'media',
-    disableLocalStorage: true,
-    mimeTypes: ['image/*'],
+    adminThumbnail: 'thumbnail',
+    imageSizes: [
+      {
+        name: 'thumbnail',
+        width: 400,
+        height: 300,
+        position: 'centre',
+      },
+    ],
+    mimeTypes: ['image/*', 'application/pdf'],
   },
-  fields: [],
+  fields: [
+    {
+      name: 'alt',
+      type: 'text',
+      required: true,
+    },
+  ],
 }

@@ -38,13 +38,33 @@ export default buildConfig({
   plugins: [
     payloadCloudPlugin(),
     gcsStorage({
-      collections: {
-        media: true,
-      },
+      // Set the bucket name
       bucket: process.env.GCS_BUCKET || '',
+
+      // Configure which collections should use GCS
+      collections: {
+        media: {
+          // Optional: Configure specific options for the media collection
+          prefix: 'media/', // Add a prefix to all uploaded files
+          generateFileURL: ({ filename }) => {
+            const url = `https://storage.googleapis.com/${process.env.GCS_BUCKET}/media/${filename}`
+            console.log(url, '_____')
+            return url
+          },
+        },
+      },
+
+      // Optional: Set ACL (access control)
+      acl: 'Public',
+
+      // Configure GCS client options
       options: {
         projectId: process.env.GCLOUD_PROJECT_ID,
+        credentials: JSON.parse(process.env.GCS_KEY || '{}'),
       },
+
+      // Optional: Enable/disable the plugin
+      enabled: true,
     }),
   ],
 })
