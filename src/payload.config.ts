@@ -35,6 +35,10 @@ export default buildConfig({
     url: process.env.DATABASE_URI || '',
   }),
   sharp,
+
+  cors: {
+    origins: ['http://localhost:5173', 'https://www.taiabarabash.com', '*'],
+  },
   plugins: [
     payloadCloudPlugin(),
     gcsStorage({

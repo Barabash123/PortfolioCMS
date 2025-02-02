@@ -3,6 +3,12 @@ import type { CollectionConfig } from 'payload'
 export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {},
+  access: {
+    read: ({ req }) => {
+      console.log('Access check for projects:', req.method, req.url)
+      return true
+    },
+  },
   fields: [
     {
       name: 'preview',
