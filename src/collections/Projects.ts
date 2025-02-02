@@ -1,20 +1,41 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, PayloadRequest } from 'payload'
 
 export const Projects: CollectionConfig = {
   slug: 'projects',
   admin: {},
   access: {
-    read: ({ req }) => {
-      console.log('Access check for projects:', req.method, req.url)
-      return true
-    },
+    read: () => true,
   },
   fields: [
+    {
+      name: 'slug',
+      type: 'text',
+      label: 'Slug, will be use for routing',
+    },
+    {
+      name: 'title',
+      type: 'text',
+    },
     {
       name: 'preview',
       type: 'upload',
       relationTo: 'media',
       required: true,
+    },
+
+    {
+      name: 'previewMobile',
+      type: 'upload',
+      relationTo: 'media',
+      required: true,
+    },
+    {
+      name: 'dateRange',
+      type: 'text',
+    },
+    {
+      name: 'label',
+      type: 'text',
     },
     {
       name: 'description',
@@ -22,7 +43,13 @@ export const Projects: CollectionConfig = {
       fields: [
         {
           name: 'about',
-          type: 'text',
+          type: 'array',
+          fields: [
+            {
+              name: 'text',
+              type: 'text',
+            },
+          ],
         },
         {
           name: 'behance',
@@ -51,7 +78,13 @@ export const Projects: CollectionConfig = {
                 },
                 {
                   name: 'description',
-                  type: 'text',
+                  type: 'array',
+                  fields: [
+                    {
+                      name: 'text',
+                      type: 'text',
+                    },
+                  ],
                 },
               ],
             },
@@ -61,22 +94,30 @@ export const Projects: CollectionConfig = {
     },
     {
       name: 'media',
+      label: 'Media content (will be position in the row in desktop, and in column on mobile)',
       type: 'array',
       fields: [
         {
-          name: 'grid',
-          type: 'text',
-          label: 'Grid Position',
-        },
-        {
           name: 'desktopImage',
-          type: 'upload',
-          relationTo: 'media',
+          type: 'array',
+          fields: [
+            {
+              name: 'url',
+              type: 'upload',
+              relationTo: 'media',
+            },
+          ],
         },
         {
           name: 'mobileImage',
-          type: 'upload',
-          relationTo: 'media',
+          type: 'array',
+          fields: [
+            {
+              name: 'url',
+              type: 'upload',
+              relationTo: 'media',
+            },
+          ],
         },
       ],
     },

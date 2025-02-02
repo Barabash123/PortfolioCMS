@@ -112,9 +112,19 @@ export interface Media {
  */
 export interface Project {
   id: string;
+  slug?: string | null;
+  title?: string | null;
   preview: string | Media;
+  previewMobile: string | Media;
+  dateRange?: string | null;
+  label?: string | null;
   description: {
-    about?: string | null;
+    about?:
+      | {
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
     behance?: string | null;
     details: {
       title: string;
@@ -122,7 +132,12 @@ export interface Project {
       content?:
         | {
             title?: string | null;
-            description?: string | null;
+            description?:
+              | {
+                  text?: string | null;
+                  id?: string | null;
+                }[]
+              | null;
             id?: string | null;
           }[]
         | null;
@@ -130,9 +145,18 @@ export interface Project {
   };
   media?:
     | {
-        grid?: string | null;
-        desktopImage?: (string | null) | Media;
-        mobileImage?: (string | null) | Media;
+        desktopImage?:
+          | {
+              url?: (string | null) | Media;
+              id?: string | null;
+            }[]
+          | null;
+        mobileImage?:
+          | {
+              url?: (string | null) | Media;
+              id?: string | null;
+            }[]
+          | null;
         id?: string | null;
       }[]
     | null;
@@ -253,11 +277,21 @@ export interface MediaSelect<T extends boolean = true> {
  * via the `definition` "projects_select".
  */
 export interface ProjectsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
   preview?: T;
+  previewMobile?: T;
+  dateRange?: T;
+  label?: T;
   description?:
     | T
     | {
-        about?: T;
+        about?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+            };
         behance?: T;
         details?:
           | T
@@ -268,7 +302,12 @@ export interface ProjectsSelect<T extends boolean = true> {
                 | T
                 | {
                     title?: T;
-                    description?: T;
+                    description?:
+                      | T
+                      | {
+                          text?: T;
+                          id?: T;
+                        };
                     id?: T;
                   };
             };
@@ -276,9 +315,18 @@ export interface ProjectsSelect<T extends boolean = true> {
   media?:
     | T
     | {
-        grid?: T;
-        desktopImage?: T;
-        mobileImage?: T;
+        desktopImage?:
+          | T
+          | {
+              url?: T;
+              id?: T;
+            };
+        mobileImage?:
+          | T
+          | {
+              url?: T;
+              id?: T;
+            };
         id?: T;
       };
   updatedAt?: T;
